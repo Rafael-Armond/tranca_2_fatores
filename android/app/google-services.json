@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "711728385605",
+    "project_id": "tranca-2-fatores-d9457",
+    "storage_bucket": "tranca-2-fatores-d9457.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:711728385605:android:fa13e64858cbfa80119d2c",
+        "android_client_info": {
+          "package_name": "com.labprojetos.tranca_2_fatores"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "711728385605-qt05ic988bpsdksrdu6vji3sfu5gp15d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.labprojetos.tranca_2_fatores",
+            "certificate_hash": "5550dd3cf7f58f8e11a34df5014a3effa7bf8819"
+          }
+        },
+        {
+          "client_id": "711728385605-lekmddlcr53a71bng9nhbki8g0ob9r85.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByV7Dj_eyChSXR1o2qapxkOXnTuBU_DH0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "711728385605-lekmddlcr53a71bng9nhbki8g0ob9r85.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

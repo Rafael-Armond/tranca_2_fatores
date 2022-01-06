@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            FirebaseFirestore.instance.collection("col").doc("doc").set({
+            FirebaseFirestore.instance.collection("col").doc().set({
               "name": "Rafael Maia",
               "age": 24,
             });

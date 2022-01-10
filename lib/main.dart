@@ -5,9 +5,15 @@ import 'dist/firebase_options.secret.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: FirebaseConfigOptions.options,
-  );
+  Firebase.initializeApp();
+  // try {
+  //   await Firebase.initializeApp(
+  //     options: FirebaseConfigOptions.options,
+  //   );
+  //   print("Firebase initialized apps ${Firebase.apps.length}");
+  // } catch(error) {
+  //   print("Error Firebase: $error");
+  // }
   
   runApp(const MyApp());
 }

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'dist/firebase_options.secret.dart';
+// import 'dist/firebase_options.secret.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

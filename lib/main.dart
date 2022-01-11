@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:tranca_2_fatores/repositories/implementations/user_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,11 +24,8 @@ class MyApp extends StatelessWidget {
           title: const Text("Firebase"),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            FirebaseFirestore.instance.collection("col").doc().set({
-              "name": "Rafael Maia",
-              "age": 24,
-            });
+          onPressed: () async {
+            //await UserRepository.logInUser();
           }
         ),
       ),

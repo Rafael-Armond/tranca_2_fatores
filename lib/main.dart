@@ -1,11 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:tranca_2_fatores/repositories/implementations/user_repository.dart';
+import 'package:get/get.dart';
+import 'package:tranca_2_fatores/dependency_management.dart';
+import 'package:tranca_2_fatores/views/screens/login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  await Firebase.initializeApp();
+  dependencyManagement();
   runApp(const MyApp());
 }
 
@@ -14,22 +16,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return GetMaterialApp(
+      title: 'Tranca 2 Fatores',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Firebase"),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            //await UserRepository.logInUser();
-          }
+        buttonTheme: const ButtonThemeData(
+          buttonColor: Colors.blue,
+          textTheme: ButtonTextTheme.primary,
         ),
       ),
+      home: LoginView(),
     );
   }
 }
-

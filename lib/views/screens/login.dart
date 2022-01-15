@@ -90,14 +90,6 @@ class LoginView extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          FirebaseFirestore.instance.collection('teste2').add({
-            'teste': 'teste',
-          });
-        },
-      ),
     );
   }
 }

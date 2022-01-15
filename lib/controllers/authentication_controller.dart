@@ -58,7 +58,7 @@ class AuthenticationController extends GetxController {
 
   Future<void> logOut() async {
     try {
-      await userRepository.logOutUser();
+      await userRepository.logOutUser(email.value);
     } catch (e) {
       SnackbarUtil.showErrorSnackbar(
         title: 'Erro ao deslogar',

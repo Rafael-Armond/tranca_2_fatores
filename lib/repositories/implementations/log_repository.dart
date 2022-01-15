@@ -27,7 +27,7 @@ class LogRepository implements ILogRepository {
   Future<void> signOutLog(
       {required String email, required LogActions logAction}) async {
     try {
-      db.collection('logs').doc(email).set({
+      db.collection('logs').doc().set({
         'email': email,
         'action': LogActions.logoutUser.toString(),
         'created_at': DateTime.now(),
@@ -44,7 +44,7 @@ class LogRepository implements ILogRepository {
   Future<void> signUpLog(
       {required String email, required LogActions logAction}) async {
     try {
-      db.collection('logs').doc(email).set({
+      db.collection('logs').doc().set({
         'email': email,
         'action': LogActions.createUser.toString(),
         'created_at': DateTime.now(),

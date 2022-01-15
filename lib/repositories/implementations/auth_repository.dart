@@ -8,25 +8,28 @@ import 'package:tranca_2_fatores/utils/snackbar_util.dart';
 class AuthRepository implements IAuthRepository {
   final auth = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
-  LogRepository logRepository = LogRepository();
+  final LogRepository logRepository;
+
+  AuthRepository(this.logRepository);
 
   @override
   Future<void> logInUser(String email, String password) async {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
-      // db.collection('logs').doc(email).set({
-      //   'action': LogActions.loginUser.toString(),
-      //   'created_at': DateTime.now(),
-      // });
-      logRepository.signInLog(email: email, logAction: LogActions.loginUser);
+      logRepository.signInLog(email: email, logAction: LogActions.logoutUser);
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(code: e.code, message: e.message);
     }
   }
 
   @override
-  Future<void> logOutUser() async {
-    await FirebaseAuth.instance.signOut();
+  Future<void> logOutUser(String email) async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      logRepository.signOutLog(email: email, logAction: LogActions.logoutUser);
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(code: e.code, message: e.message);
+    }
   }
 
   @override
@@ -46,10 +49,7 @@ class AuthRepository implements IAuthRepository {
       });
 
       // Criando log de registro
-      db.collection('logs').doc(email).set({
-        'action': LogActions.createUser.toString(),
-        'created_at': DateTime.now(),
-      });
+      logRepository.signUpLog(email: email, logAction: LogActions.createUser);
 
       return true;
     } on FirebaseAuthException catch (e) {

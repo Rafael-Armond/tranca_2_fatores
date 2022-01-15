@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,6 +14,7 @@ class LoginView extends StatelessWidget {
   LoginView({Key? key}) : super(key: key);
 
   final AuthenticationController authController = Get.find();
+  final auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -58,13 +60,18 @@ class LoginView extends StatelessWidget {
                         ? () async {
                             CustomLoadingProgressIndicator.show(context);
                             try {
-                              await authController.signIn();
+                              await authController.logInUser();
                               Get.off(() => HomeView());
-                            } catch (e) {
-                              print(e.toString());
-                              SnackbarUtil.showErrorSnackbar(
-                                  title: 'Erro ao tentar logar',
-                                  message: 'Confira suas credenciais');
+                            } on FirebaseAuthException catch (e) {
+                              if (e.code == 'user-not-found') {
+                                SnackbarUtil.showErrorSnackbar(
+                                    title: 'Erro ao tentar logar',
+                                    message: 'Usuário não encontrado');
+                              } else if (e.code == 'wrong-password') {
+                                SnackbarUtil.showErrorSnackbar(
+                                    title: 'Erro ao tentar logar',
+                                    message: 'Senha incorreta');
+                              }
                             } finally {
                               CustomLoadingProgressIndicator.hide();
                             }

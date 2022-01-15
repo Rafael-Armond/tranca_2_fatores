@@ -5,11 +5,10 @@ import 'package:tranca_2_fatores/utils/snackbar_util.dart';
 
 class AuthenticationController extends GetxController {
   final AuthRepository userRepository;
-  final UserModel userModel;
+  // final UserModel userModel;
 
   AuthenticationController({
     required this.userRepository,
-    required this.userModel,
   });
 
   Rx<String> fullName = ''.obs;
@@ -18,6 +17,7 @@ class AuthenticationController extends GetxController {
   Rx<String> confirmPassword = ''.obs;
 
   clearController() {
+    fullName.value = '';
     email.value = '';
     password.value = '';
     confirmPassword.value = '';
@@ -38,8 +38,10 @@ class AuthenticationController extends GetxController {
     }
 
     try {
-      bool? isUserRegistered =
-          await userRepository.registerUser(email.value, password.value);
+      bool? isUserRegistered = await userRepository.registerUser(
+          fullName: fullName.value,
+          email: email.value,
+          password: password.value);
       if (isUserRegistered) {
         clearController();
         return isUserRegistered;

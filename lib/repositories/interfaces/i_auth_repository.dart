@@ -1,5 +1,8 @@
-abstract class IUserRepository {
+abstract class IAuthRepository {
   Future<void> logInUser(String email, String password);
   Future<void> logOutUser();
-  Future<bool> registerUser(String email, String password);
+  Future<bool> registerUser(
+      {required String fullName,
+      required String email,
+      required String password});
 }

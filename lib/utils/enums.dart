@@ -1,5 +1,6 @@
-enum log_action {
+enum LogActions {
   createUser,
+  logoutUser,
   loginUser,
   requestedUnlock,
   sendCode,

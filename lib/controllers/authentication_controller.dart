@@ -46,7 +46,6 @@ class AuthenticationController extends GetxController {
         return isUserRegistered;
       }
     } catch (e) {
-      print(e);
       SnackbarUtil.showErrorSnackbar(
         title: 'Erro ao registrar usuário',
         message:

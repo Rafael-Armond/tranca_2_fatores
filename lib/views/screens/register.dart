@@ -71,7 +71,7 @@ class RegisterView extends StatelessWidget {
                         ? () async {
                             try {
                               await authController.registerUser();
-                            } on FirebaseAuthException catch (e) {
+                            } on FirebaseAuthException catch (_) {
                               SnackbarUtil.showErrorSnackbar(
                                 title: 'Erro ao registrar usuário',
                                 message:

@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:tranca_2_fatores/models/user.dart';
 import 'package:tranca_2_fatores/repositories/implementations/auth_repository.dart';
 import 'package:tranca_2_fatores/utils/snackbar_util.dart';
 

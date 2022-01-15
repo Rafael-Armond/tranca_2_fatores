@@ -1,6 +1,6 @@
 enum log_action {
-  create_user,
-  login_user,
-  requested_unlock,
-  send_code,
+  createUser,
+  loginUser,
+  requestedUnlock,
+  sendCode,
 }

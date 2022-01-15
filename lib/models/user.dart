@@ -23,12 +23,12 @@ class UserModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['fullName'] = this.fullName;
-    data['email'] = this.email;
-    data['password'] = this.password;
-    data['phoneNumber'] = this.phoneNumber;
-    data['createdAt'] = this.createdAt?.toIso8601String();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['fullName'] = fullName;
+    data['email'] = email;
+    data['password'] = password;
+    data['phoneNumber'] = phoneNumber;
+    data['createdAt'] = createdAt?.toIso8601String();
     return data;
   }
 }

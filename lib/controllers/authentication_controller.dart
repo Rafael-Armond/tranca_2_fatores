@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:tranca_2_fatores/models/user.dart';
 import 'package:tranca_2_fatores/repositories/implementations/auth_repository.dart';
 import 'package:tranca_2_fatores/utils/snackbar_util.dart';
 
@@ -47,7 +46,6 @@ class AuthenticationController extends GetxController {
         return isUserRegistered;
       }
     } catch (e) {
-      print(e);
       SnackbarUtil.showErrorSnackbar(
         title: 'Erro ao registrar usuário',
         message:
@@ -60,7 +58,7 @@ class AuthenticationController extends GetxController {
 
   Future<void> logOut() async {
     try {
-      await userRepository.logOutUser();
+      await userRepository.logOutUser(email.value);
     } catch (e) {
       SnackbarUtil.showErrorSnackbar(
         title: 'Erro ao deslogar',

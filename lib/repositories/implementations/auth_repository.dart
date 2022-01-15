@@ -1,23 +1,35 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tranca_2_fatores/repositories/implementations/log_repository.dart';
 import 'package:tranca_2_fatores/repositories/interfaces/i_auth_repository.dart';
+import 'package:tranca_2_fatores/utils/enums.dart';
 import 'package:tranca_2_fatores/utils/snackbar_util.dart';
 
 class AuthRepository implements IAuthRepository {
   final auth = FirebaseAuth.instance;
+  final db = FirebaseFirestore.instance;
+  final LogRepository logRepository;
+
+  AuthRepository(this.logRepository);
 
   @override
   Future<void> logInUser(String email, String password) async {
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
+      logRepository.signInLog(email: email, logAction: LogActions.logoutUser);
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(code: e.code, message: e.message);
     }
   }
 
   @override
-  Future<void> logOutUser() async {
-    await FirebaseAuth.instance.signOut();
+  Future<void> logOutUser(String email) async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      logRepository.signOutLog(email: email, logAction: LogActions.logoutUser);
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(code: e.code, message: e.message);
+    }
   }
 
   @override
@@ -28,11 +40,16 @@ class AuthRepository implements IAuthRepository {
     try {
       await auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      FirebaseFirestore.instance.collection('users').doc(email).set({
+
+      // Registrando user no firestore
+      db.collection('users').doc(email).set({
         'full_name': fullName,
         'email': email,
         'created_at': DateTime.now(),
       });
+
+      // Criando log de registro
+      logRepository.signUpLog(email: email, logAction: LogActions.createUser);
 
       return true;
     } on FirebaseAuthException catch (e) {

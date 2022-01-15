@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tranca_2_fatores/controllers/authentication_controller.dart';
 import 'package:tranca_2_fatores/utils/snackbar_util.dart';
 import 'package:tranca_2_fatores/views/components/custom_text_form.dart';
+import 'package:tranca_2_fatores/views/screens/login.dart';
 
 class RegisterView extends StatelessWidget {
   RegisterView({Key? key}) : super(key: key);
@@ -71,7 +72,9 @@ class RegisterView extends StatelessWidget {
                         ? () async {
                             try {
                               await authController.registerUser();
-                            } on FirebaseAuthException catch (e) {
+                              authController.clearController();
+                              Get.to(LoginView());
+                            } on FirebaseAuthException catch (_) {
                               SnackbarUtil.showErrorSnackbar(
                                 title: 'Erro ao registrar usuário',
                                 message:

@@ -18,9 +18,8 @@ class UserModel {
     email = json['email'];
     password = json['password'];
     phoneNumber = json['phoneNumber'];
-    createdAt = json['createdAt'] != null
-        ? DateTime.parse(json['createdAt'])
-        : null;
+    createdAt =
+        json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -29,8 +28,7 @@ class UserModel {
     data['email'] = this.email;
     data['password'] = this.password;
     data['phoneNumber'] = this.phoneNumber;
-    data['createdAt'] =
-        this.createdAt?.toIso8601String();
+    data['createdAt'] = this.createdAt?.toIso8601String();
     return data;
   }
 }

@@ -28,8 +28,7 @@ class RegisterView extends StatelessWidget {
                 child: CustomTextForm(
                   label: 'Nome completo',
                   onChanged: (String text) =>
-                      // userController.fullName.value = text,
-                      print("Nome completo: $text"),
+                      authController.fullName.value = text,
                 ),
               ),
               Padding(

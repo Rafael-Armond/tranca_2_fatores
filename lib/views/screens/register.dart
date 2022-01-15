@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tranca_2_fatores/controllers/authentication_controller.dart';
@@ -22,6 +23,14 @@ class RegisterView extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              Padding(
+                padding: EdgeInsets.all(screenWidth * 0.05),
+                child: CustomTextForm(
+                  label: 'Nome completo',
+                  onChanged: (String text) =>
+                      authController.fullName.value = text,
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.all(screenWidth * 0.05),
                 child: CustomTextForm(
@@ -62,7 +71,7 @@ class RegisterView extends StatelessWidget {
                         ? () async {
                             try {
                               await authController.registerUser();
-                            } catch (e) {
+                            } on FirebaseAuthException catch (e) {
                               SnackbarUtil.showErrorSnackbar(
                                 title: 'Erro ao registrar usuário',
                                 message:

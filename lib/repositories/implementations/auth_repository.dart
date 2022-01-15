@@ -1,22 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:tranca_2_fatores/repositories/interfaces/i_user_repository.dart';
+import 'package:tranca_2_fatores/repositories/interfaces/i_auth_repository.dart';
 import 'package:tranca_2_fatores/utils/snackbar_util.dart';
 
-class UserRepository implements IUserRepository {
-  FirebaseAuth auth = FirebaseAuth.instance;
-  //final googleSignIn = GoogleSignIn();
+class AuthRepository implements IAuthRepository {
+  final auth = FirebaseAuth.instance;
 
   @override
   Future<void> logInUser(String email, String password) async {
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      await auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
+      throw FirebaseAuthException(code: e.code, message: e.message);
     }
   }
 
@@ -26,10 +21,19 @@ class UserRepository implements IUserRepository {
   }
 
   @override
-  Future<bool> registerUser(String email, String password) async {
+  Future<bool> registerUser(
+      {required String fullName,
+      required String email,
+      required String password}) async {
     try {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      FirebaseFirestore.instance.collection('users').doc(email).set({
+        'full_name': fullName,
+        'email': email,
+        'created_at': DateTime.now(),
+      });
+
       return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {

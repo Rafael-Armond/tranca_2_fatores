@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tranca_2_fatores/controllers/authentication_controller.dart';
 
 class HomeView extends StatelessWidget {
-  const HomeView({Key? key}) : super(key: key);
+  HomeView({Key? key}) : super(key: key);
+
+  final AuthenticationController authController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +14,7 @@ class HomeView extends StatelessWidget {
         title: const Text('Home'),
       ),
       body: Center(
-        child: const Text('Home'),
+        child: Text('Home ${authController.email}'),
       ),
     );
   }

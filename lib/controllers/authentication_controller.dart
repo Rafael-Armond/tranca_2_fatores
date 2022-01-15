@@ -1,25 +1,29 @@
 import 'package:get/get.dart';
-import 'package:tranca_2_fatores/repositories/implementations/user_repository.dart';
+import 'package:tranca_2_fatores/models/user.dart';
+import 'package:tranca_2_fatores/repositories/implementations/auth_repository.dart';
 import 'package:tranca_2_fatores/utils/snackbar_util.dart';
 
 class AuthenticationController extends GetxController {
-  final UserRepository userRepository;
+  final AuthRepository userRepository;
+  // final UserModel userModel;
 
   AuthenticationController({
     required this.userRepository,
   });
 
+  Rx<String> fullName = ''.obs;
   Rx<String> email = ''.obs;
   Rx<String> password = ''.obs;
   Rx<String> confirmPassword = ''.obs;
 
   clearController() {
+    fullName.value = '';
     email.value = '';
     password.value = '';
     confirmPassword.value = '';
   }
 
-  Future<void> signIn() async {
+  Future<void> logInUser() async {
     await userRepository.logInUser(email.value, password.value);
   }
 
@@ -34,9 +38,11 @@ class AuthenticationController extends GetxController {
     }
 
     try {
-      bool? isUserRegistered =
-          await userRepository.registerUser(email.value, password.value);
-      if (isUserRegistered != null) {
+      bool? isUserRegistered = await userRepository.registerUser(
+          fullName: fullName.value,
+          email: email.value,
+          password: password.value);
+      if (isUserRegistered) {
         clearController();
         return isUserRegistered;
       }

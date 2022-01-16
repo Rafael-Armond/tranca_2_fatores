@@ -1,13 +1,15 @@
 import 'package:get/get.dart';
+import 'package:tranca_2_fatores/controllers/local_auth_controller.dart';
 import 'package:tranca_2_fatores/repositories/implementations/auth_repository.dart';
 import 'package:tranca_2_fatores/utils/snackbar_util.dart';
 
 class AuthenticationController extends GetxController {
   final AuthRepository userRepository;
-  // final UserModel userModel;
+  final LocalAuthController localAuthController;
 
   AuthenticationController({
     required this.userRepository,
+    required this.localAuthController,
   });
 
   Rx<String> fullName = ''.obs;
@@ -33,6 +35,17 @@ class AuthenticationController extends GetxController {
         message: 'As senhas não conferem, por favor, verifique.',
       );
 
+      return false;
+    }
+
+    // Impedindo que o usuário seja cadastrado quando seu dispositivo não tiver alguma forma de autenticação local
+    var localAuthList = await localAuthController.getAvailableBiometrics;
+    if (localAuthList.isEmpty) {
+      SnackbarUtil.showInfoSnackbar(
+        title: 'Autenticação local não disponível',
+        message:
+            'Não foi possível cadastrar o usuário, pois não há nenhuma forma de autenticação local disponível.',
+      );
       return false;
     }
 

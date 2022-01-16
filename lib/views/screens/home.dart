@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tranca_2_fatores/controllers/authentication_controller.dart';
+import 'package:tranca_2_fatores/controllers/local_auth_controller.dart';
 import 'package:tranca_2_fatores/utils/snackbar_util.dart';
 import 'package:tranca_2_fatores/views/screens/login.dart';
 
@@ -9,6 +10,7 @@ class HomeView extends StatelessWidget {
   HomeView({Key? key}) : super(key: key);
 
   final AuthenticationController authController = Get.find();
+  final LocalAuthController localAuthController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,21 @@ class HomeView extends StatelessWidget {
       ),
       body: Center(
         child: Text('Home ${authController.email}'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () async {
+          var localAuthList = await localAuthController.getAvailableBiometrics;
+          localAuthList.forEach((element) {
+            print(element);
+          });
+          if (localAuthList.isEmpty) {
+            Get.snackbar('Erro', 'Nenhum biometria disponível');
+          } else {
+            Get.snackbar('Sucesso', 'Biometria disponível');
+            localAuthController.authenticate();
+          }
+        },
       ),
     );
   }

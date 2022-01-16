@@ -1,5 +1,6 @@
 import 'package:get/instance_manager.dart';
 import 'package:tranca_2_fatores/controllers/authentication_controller.dart';
+import 'package:tranca_2_fatores/controllers/local_auth_controller.dart';
 import 'package:tranca_2_fatores/repositories/implementations/auth_repository.dart';
 import 'package:tranca_2_fatores/repositories/implementations/log_repository.dart';
 
@@ -9,5 +10,8 @@ void dependencyManagement() {
   Get.put(AuthRepository(Get.find<LogRepository>()));
 
   // Controllers (Stores)
-  Get.put(AuthenticationController(userRepository: Get.find<AuthRepository>()));
+  Get.put(LocalAuthController());
+  Get.put(AuthenticationController(
+      userRepository: Get.find<AuthRepository>(),
+      localAuthController: Get.find<LocalAuthController>()));
 }
